@@ -8,7 +8,6 @@
     {
         private static List<Player> players = new List<Player>();
 
-
         public static int Add(Player player)
         {
             if (players.Contains(player))

@@ -1,5 +1,6 @@
 ﻿namespace Spineless
 {
+    using System;
     using UnityEngine;
 
 
@@ -20,6 +21,8 @@
 
         private new Rigidbody2D rigidbody2D;
         private bool shouldMove;
+        public event Action StartedMoving;
+        public event Action StoppedMoving;
 
 
         #region Properties
@@ -34,6 +37,23 @@
         {
             get { return this.autoMove; }
             set { this.autoMove = value; }
+        }
+
+
+        public Vector2 CurrentSpeed
+        {
+            get
+            {
+                return new Vector2(
+                    Mathf.Abs(this.Rigidbody2D.velocity.x),
+                    Mathf.Abs(this.Rigidbody2D.velocity.y));
+            }
+        }
+
+
+        public Vector2 CurrentVelocity
+        {
+            get { return this.Rigidbody2D.velocity; }
         }
 
 

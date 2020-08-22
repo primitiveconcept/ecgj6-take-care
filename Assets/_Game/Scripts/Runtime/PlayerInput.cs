@@ -69,20 +69,34 @@ namespace TakeCare
             if (this.isMovementLocked)
                 return;
 
-            float horizontalInput = Input.GetAxisRaw(Controls.HorizontalAxis);
-            float verticalInput = Input.GetAxisRaw(Controls.VerticalAxis);
-            float mouseWheelInput = Input.GetAxisRaw(Controls.MouseWheelAxis);
+            float horizontalInput = Input.GetAxisRaw(InputAxes.Horizontal);
+            float verticalInput = Input.GetAxisRaw(InputAxes.Vertical);
+            float inventoryInput = Input.GetAxisRaw(InputAxes.Inventory);
+
+            bool inventoryNext = inventoryInput > 0;
+            bool inventoryPrevious = inventoryInput < 0;
+            
 
             Move(new Vector2(horizontalInput, verticalInput));
 
-            if (mouseWheelInput > 0)
+            if (Input.GetButtonUp(InputAxes.Take))
             {
-                // TODO
+                Debug.Log("TAKE");
             }
 
-            else if (mouseWheelInput < 0)
+            if (Input.GetButtonUp(InputAxes.Care))
             {
-                // TODO
+                Debug.Log("CARE");
+            }
+            
+            if (inventoryNext)
+            {
+                Debug.Log("INVENTORY: NEXT");
+            }
+
+            else if (inventoryPrevious)
+            {
+                Debug.Log("INVENTORY: PREVIOUS");
             }
         }
     }

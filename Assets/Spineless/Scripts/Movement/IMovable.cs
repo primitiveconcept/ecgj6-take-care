@@ -1,12 +1,19 @@
 ﻿namespace Spineless
 {
+    using System;
     using UnityEngine;
 
 
     public interface IMovable
     {
+        event Action StartedMoving;
+        event Action StoppedMoving;
+
+
         #region Properties
         Vector2 AdditionalVelocity { get; set; }
+        Vector2 CurrentSpeed { get; }
+        Vector2 CurrentVelocity { get; }
         Vector2 MoveDirection { get; set; }
 
         Rigidbody2D Rigidbody2D { get; }
@@ -34,7 +41,8 @@
                 Mathf.Clamp((int)vector2.x, -1, 1),
                 Mathf.Clamp((int)vector2.y, -1, 1));
         }
-        
+
+
         public static Rigidbody2D SetupRigidbody(this GameObject gameObject, bool overwrite = false)
         {
             Rigidbody2D rigidbody2D = gameObject.GetComponent<Rigidbody2D>();

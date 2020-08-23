@@ -11,6 +11,8 @@
 /// </summary>
 public static class SortingLayers
 {
+	public const string Skybox = "Skybox";
 	public const string Terrain = "Terrain";
 	public const string Default = "Default";
+	public const string UI = "UI";
 }

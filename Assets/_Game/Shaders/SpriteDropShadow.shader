@@ -1,4 +1,4 @@
-Shader "UnityCommunity/Sprites/SpriteDropShadow"
+Shader "Sprites/SpriteDropShadow"
 {
 	Properties
 	{

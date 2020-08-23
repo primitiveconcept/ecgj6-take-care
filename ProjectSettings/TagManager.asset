@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Skybox
+    uniqueID: 2574970383
+    locked: 0
   - name: Terrain
     uniqueID: 294130047
     locked: 0

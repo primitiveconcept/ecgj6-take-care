@@ -3,7 +3,7 @@ namespace TakeCare
     using UnityEngine;
 
 
-    public interface IItem
+    public interface IItemData
     {
         Sprite Icon { get; }
         void Use();

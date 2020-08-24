@@ -5,17 +5,24 @@ namespace TakeCare
 
     public class FractalTextureGenerator
     {
-        public static void GenerateTexture()
+        public static Sprite GenerateSprite(Fractal fractal, int width, int height)
         {
-            int size = 256;
+            return GenerateSprite(fractal, width, height, new Vector2(0.5f, 0.5f));
+        }
+        
+        public static Sprite GenerateSprite(Fractal fractal, int width, int height, Vector2 pivot)
+        {
+            
             
             Material fractalMaterial = new Material(Shader.Find("Fractal Shader"));
-            Texture2D texture = ShaderToTexture(fractalMaterial, size, size);
+            fractal.ApplyToMaterial(fractalMaterial);
+            Texture2D texture = ShaderToTexture(fractalMaterial, width, height);
+            
             Material transparentMaterial = new Material(Shader.Find("Transparent Color"));
             transparentMaterial.SetTexture("_MainTex", texture);
             transparentMaterial.SetColor("_TransparentColor", Color.white);
             transparentMaterial.SetFloat("_Threshold", 0.75f);
-            texture = ShaderToTexture(transparentMaterial, size, size);
+            texture = ShaderToTexture(transparentMaterial, width, height);
 
             Color[] pixels = texture.GetPixels();
             Color32[] newPixels = new Color32[pixels.Length];
@@ -33,30 +40,13 @@ namespace TakeCare
             texture.SetPixels32(newPixels);
             texture.Apply();
 
-
-            GameObject gameObject = new GameObject("Fractal");
-            SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
             Sprite sprite = Sprite.Create(
-                texture, 
-                new Rect(0,0,size,size), 
-                new Vector2(0.5f,0.5f), 16);
-            
-            spriteRenderer.sprite = sprite;
-        }
+                texture: texture, 
+                rect: new Rect(0, 0, width, height), 
+                pivot: pivot, 
+                pixelsPerUnit: 16);
 
-
-        public static Texture2D GetFractalTexture(int width, int height, Fractal fractal)
-        {
-            Texture2D texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
-
-            
-            
-            foreach (Fractal.Quad quad in fractal.Quads)
-            {
-                
-            }
-
-            return texture;
+            return sprite;
         }
 
 

@@ -53,7 +53,7 @@ namespace TakeCare
         }
 
 
-        public void InitiateFeaturePlacement(Placeable placeable)
+        public void InitiateFeaturePlacement(PlaceableData placeableData)
         {
             
         }

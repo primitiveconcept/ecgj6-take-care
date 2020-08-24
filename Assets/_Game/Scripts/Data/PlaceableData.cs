@@ -4,8 +4,8 @@ namespace TakeCare
     using UnityEngine.Tilemaps;
 
 
-    public class Placeable : ScriptableObject,
-                             IItem
+    public class PlaceableData : ScriptableObject,
+                             IItemData
     {
         public Sprite Icon
         {

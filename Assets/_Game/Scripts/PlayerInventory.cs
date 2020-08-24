@@ -11,14 +11,14 @@ namespace TakeCare
         
         public List<InventorySlot> Items;
 
-        private Dictionary<IItem, InventorySlot> index;
+        private Dictionary<IItemData, InventorySlot> index;
         private int currentItemIndex = 0;
 
 
         public void Awake()
         {
             instance = this;
-            instance.index = new Dictionary<IItem, InventorySlot>();
+            instance.index = new Dictionary<IItemData, InventorySlot>();
         }
         
         public static InventorySlot GetNext()
@@ -51,31 +51,31 @@ namespace TakeCare
         }
         
 
-        public static void AddItem(IItem item, int quantity = 1)
+        public static void AddItem(IItemData itemData, int quantity = 1)
         {
-            if (!instance.index.ContainsKey(item))
-                instance.index.Add(item, new InventorySlot(item, 0));
+            if (!instance.index.ContainsKey(itemData))
+                instance.index.Add(itemData, new InventorySlot(itemData, 0));
 
-            instance.index[item].Quantity += quantity;
+            instance.index[itemData].Quantity += quantity;
         }
 
 
-        public static void RemoveItem(IItem item, int quantity = 1)
+        public static void RemoveItem(IItemData itemData, int quantity = 1)
         {
-            if (!instance.index.ContainsKey(item))
+            if (!instance.index.ContainsKey(itemData))
                 return;
 
-            instance.index[item].Quantity -= quantity;
-            if (instance.index[item].Quantity < 1)
-                instance.index.Remove(item);
+            instance.index[itemData].Quantity -= quantity;
+            if (instance.index[itemData].Quantity < 1)
+                instance.index.Remove(itemData);
         }
 
-        public static int GetItemQuantity(IItem item)
+        public static int GetItemQuantity(IItemData itemData)
         {
-            if (!instance.index.ContainsKey(item))
+            if (!instance.index.ContainsKey(itemData))
                 return 0;
             
-            return instance.index[item].Quantity;
+            return instance.index[itemData].Quantity;
         }
 
     }
@@ -84,13 +84,13 @@ namespace TakeCare
     [Serializable]
     public class InventorySlot
     {
-        public IItem Item;
+        public IItemData itemData;
         public int Quantity;
 
 
-        public InventorySlot(IItem item, int quantity)
+        public InventorySlot(IItemData itemData, int quantity)
         {
-            this.Item = item;
+            this.itemData = itemData;
             this.Quantity = quantity;
         }
     }

@@ -1,29 +1,27 @@
 namespace TakeCare
 {
-    using System.Collections.Generic;
+    using System;
     using UnityEngine;
 
 
+    [Serializable]
     public class Fractal
     {
-        public List<Quad> Quads;
-        
-        
-        
-        public struct Quad
-        {
-            public readonly Vector2Int[] Points;
+        public int Iterations = 100;
+        public float ConvergenceThreshold = 4f;
+        public Vector2 Center = new Vector2(0, 0);
+        public float Scale = 2;
+        public int Multibrot = 4;
 
-            public Quad(Vector2Int point1, Vector2Int point2, Vector2Int point3, Vector2Int point4)
-            {
-                this.Points = new Vector2Int[4];
-                this.Points[0] = point1;
-                this.Points[1] = point2;
-                this.Points[2] = point3;
-                this.Points[3] = point4;
-            }
+
+        public void ApplyToMaterial(Material fractalMaterial)
+        {
+            fractalMaterial.SetInt("iterations", this.Iterations);
+            fractalMaterial.SetFloat("convergenceThreshold", this.ConvergenceThreshold);
+            fractalMaterial.SetInt("multibrot", this.Multibrot);
+            fractalMaterial.SetFloat("scale", this.Scale);
+            fractalMaterial.SetFloat("centreX", this.Center.x);
+            fractalMaterial.SetFloat("centreY", this.Center.y);
         }
-        
-        
     }
 }

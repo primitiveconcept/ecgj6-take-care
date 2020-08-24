@@ -11,14 +11,14 @@ namespace TakeCare
         
         public List<InventorySlot> Items;
 
-        private Dictionary<IItemData, InventorySlot> index;
+        private Dictionary<ItemData, InventorySlot> index;
         private int currentItemIndex = 0;
 
 
         public void Awake()
         {
             instance = this;
-            instance.index = new Dictionary<IItemData, InventorySlot>();
+            instance.index = new Dictionary<ItemData, InventorySlot>();
         }
         
         public static InventorySlot GetNext()
@@ -51,7 +51,7 @@ namespace TakeCare
         }
         
 
-        public static void AddItem(IItemData itemData, int quantity = 1)
+        public static void AddItem(ItemData itemData, int quantity = 1)
         {
             if (!instance.index.ContainsKey(itemData))
                 instance.index.Add(itemData, new InventorySlot(itemData, 0));
@@ -60,7 +60,7 @@ namespace TakeCare
         }
 
 
-        public static void RemoveItem(IItemData itemData, int quantity = 1)
+        public static void RemoveItem(ItemData itemData, int quantity = 1)
         {
             if (!instance.index.ContainsKey(itemData))
                 return;
@@ -70,7 +70,7 @@ namespace TakeCare
                 instance.index.Remove(itemData);
         }
 
-        public static int GetItemQuantity(IItemData itemData)
+        public static int GetItemQuantity(ItemData itemData)
         {
             if (!instance.index.ContainsKey(itemData))
                 return 0;
@@ -84,11 +84,11 @@ namespace TakeCare
     [Serializable]
     public class InventorySlot
     {
-        public IItemData itemData;
+        public ItemData itemData;
         public int Quantity;
 
 
-        public InventorySlot(IItemData itemData, int quantity)
+        public InventorySlot(ItemData itemData, int quantity)
         {
             this.itemData = itemData;
             this.Quantity = quantity;

@@ -7,7 +7,7 @@ namespace TakeCare
 
     public partial class BuildSystem : MonoBehaviour
     {
-        private static BuildSystem _instance;
+        private static BuildSystem instance;
 
         public RuleTile GroundTile;
 
@@ -16,12 +16,14 @@ namespace TakeCare
 
         private GameObject previewObject;
         private TileBase originalTile;
+
+        private InventorySlot currentItem;
         
         public enum BuildState
         {
             Idle,
             PlacingGround,
-            PlacingFeature
+            PlacingSeed
         }
 
 
@@ -30,7 +32,7 @@ namespace TakeCare
 
         public void Awake()
         {
-            _instance = this;
+            instance = this;
             this.state = new SimpleStateMachine<BuildState>(this);
             this.state.SetState(BuildState.Idle);
         }
@@ -42,20 +44,32 @@ namespace TakeCare
         }
 
 
-        public void InitiateGroundPlacement()
+        public static void InitiateGroundPlacement(InventorySlot inventorySlot)
         {
-            this.previewObject = new GameObject("Placement Preview");
-            SpriteRenderer spriteRenderer = this.previewObject.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = this.GroundTile.m_DefaultSprite;
+            instance.previewObject = new GameObject("Placement Preview");
+            SpriteRenderer spriteRenderer = instance.previewObject.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = instance.GroundTile.m_DefaultSprite;
             spriteRenderer.sortingLayerName = SortingLayers.UI;
             
-            this.state.SetState(BuildState.PlacingGround);
+            instance.state.SetState(BuildState.PlacingGround);
         }
 
 
-        public void InitiateFeaturePlacement(PlaceableData placeableData)
+        public static void InitiateSeedPlacement(InventorySlot inventorySlot)
         {
+            instance.previewObject = new GameObject("Placement Preview");
+            SpriteRenderer spriteRenderer = instance.previewObject.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = inventorySlot.itemData.Icon;
+            spriteRenderer.sortingLayerName = SortingLayers.UI;
             
+            instance.state.SetState(BuildState.PlacingSeed);
+        }
+
+
+        public void EndPlacement()
+        {
+            this.state.SetState(BuildState.Idle);
+            GameObject.Destroy(this.previewObject);
         }
 
 
@@ -67,7 +81,54 @@ namespace TakeCare
         public void PlacingGround()
         {
             Vector2 mousePosition = MouseControls.GetCursorWorldPosition();
+            this.previewObject.transform.position = mousePosition;
 
+            if (Input.GetButton(InputAxes.Take))
+            {
+                Vector3Int tilePosition = this.TerrainTilemap.WorldToCell(mousePosition);
+                var previousTile = this.TerrainTilemap.GetTile(tilePosition);
+                if (previousTile != this.GroundTile)
+                {
+                    bool connects = false;
+                    for (int x = tilePosition.x - 1; x < tilePosition.x + 2; x++)
+                    {
+                        for (int y = tilePosition.y - 1; y < tilePosition.y + 2; y++)
+                        {
+                            if (x == tilePosition.x
+                                && y == tilePosition.y)
+                            {
+                                continue;
+                            }
+
+                            if (this.TerrainTilemap.GetTile(new Vector3Int(x, y, 0)) == this.GroundTile)
+                            {
+                                connects = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (connects != true)
+                    {
+                        Debug.Log("Tile doesn't connect");
+                        return;
+                    }
+                    
+                    // TODO: Deduct from inventory.
+                    this.TerrainTilemap.SetTile(tilePosition, this.GroundTile);    
+                }
+            }
+
+            if (Input.GetButton(InputAxes.Care))
+            {
+                EndPlacement();
+            }
+        }
+
+
+        public void PlacingSeed()
+        {
+            Vector2 mousePosition = MouseControls.GetCursorWorldPosition();
             this.previewObject.transform.position = mousePosition;
 
             if (Input.GetButton(InputAxes.Take))
@@ -79,6 +140,11 @@ namespace TakeCare
                     // TODO: Deduct from inventory.
                     this.TerrainTilemap.SetTile(tilePosition, this.GroundTile);    
                 }
+            }
+
+            if (Input.GetButton(InputAxes.Care))
+            {
+                EndPlacement();
             }
         }
     }
@@ -102,7 +168,7 @@ namespace TakeCare
 
                 if (GUILayout.Button("Place Ground Tile"))
                 {
-                    ((BuildSystem)this.target).InitiateGroundPlacement();
+                    InitiateGroundPlacement(null);
                 }
             }
         }

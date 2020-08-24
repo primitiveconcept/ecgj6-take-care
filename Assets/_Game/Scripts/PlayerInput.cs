@@ -91,12 +91,12 @@ namespace TakeCare
             
             if (inventoryNext)
             {
-                Debug.Log("INVENTORY: NEXT");
+                PlayerInventory.GetNext();
             }
 
             else if (inventoryPrevious)
             {
-                Debug.Log("INVENTORY: PREVIOUS");
+                PlayerInventory.GetPrevious();
             }
         }
     }

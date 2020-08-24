@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if (UNITY_EDITOR)
+using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
@@ -6,8 +7,6 @@ using System.Linq;
 // Author: Alexandre Brull
 // https://brullalex.itch.io/
 // ----------------------------------------------------------------------------
-
-#if (UNITY_EDITOR)
 
 [ExecuteInEditMode]
 [CreateAssetMenu(fileName = "New Terrain Auto Rule Tile", menuName = "Tiles/Terrain Auto Rule Tile")]
@@ -56,8 +55,6 @@ public class TerrainAutoRuleTile : ScriptableObject
         // Replace this Asset with the new one.
         AssetDatabase.CreateAsset(_new, AssetDatabase.GetAssetPath(this));
     }
-
-#endif
-
 }
 
+#endif

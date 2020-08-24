@@ -12,6 +12,7 @@ namespace TakeCare
         public RuleTile GroundTile;
 
         public Tilemap TerrainTilemap;
+        public Tilemap FeaturesTilemap;
 
         private GameObject previewObject;
         private TileBase originalTile;
@@ -19,7 +20,8 @@ namespace TakeCare
         public enum BuildState
         {
             Idle,
-            PlacingGround
+            PlacingGround,
+            PlacingFeature
         }
 
 
@@ -42,7 +44,18 @@ namespace TakeCare
 
         public void InitiateGroundPlacement()
         {
+            this.previewObject = new GameObject("Placement Preview");
+            SpriteRenderer spriteRenderer = this.previewObject.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = this.GroundTile.m_DefaultSprite;
+            spriteRenderer.sortingLayerName = SortingLayers.UI;
+            
             this.state.SetState(BuildState.PlacingGround);
+        }
+
+
+        public void InitiateFeaturePlacement(Placeable placeable)
+        {
+            
         }
 
 
@@ -53,14 +66,6 @@ namespace TakeCare
 
         public void PlacingGround()
         {
-            if (this.previewObject == null)
-            {
-                this.previewObject = new GameObject("Placement Preview");
-                SpriteRenderer spriteRenderer = this.previewObject.AddComponent<SpriteRenderer>();
-                spriteRenderer.sprite = this.GroundTile.m_DefaultSprite;
-                spriteRenderer.sortingLayerName = SortingLayers.UI;
-            }
-            
             Vector2 mousePosition = MouseControls.GetCursorWorldPosition();
 
             this.previewObject.transform.position = mousePosition;

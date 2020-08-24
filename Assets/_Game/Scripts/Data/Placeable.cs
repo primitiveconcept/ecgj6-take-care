@@ -4,9 +4,22 @@ namespace TakeCare
     using UnityEngine.Tilemaps;
 
 
-    public class Placeable : ScriptableObject
+    public class Placeable : ScriptableObject,
+                             IItem
     {
-        public Tile RequisiteTerrain;
-        public Tile RequisiteAdjacentTerrain;
+        public Sprite Icon
+        {
+            get { return this.Tile.sprite; }
+        }
+
+
+        public void Use()
+        {
+            
+        }
+
+
+        public Tile Tile;
+        public TileBase RequisiteTerrain;
     }
 }

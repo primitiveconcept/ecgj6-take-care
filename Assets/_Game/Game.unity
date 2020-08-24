@@ -3033,7 +3033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GroundTile: {fileID: 11400000, guid: 3bbb862f3866bd841933d711949fee37, type: 2}
   TerrainTilemap: {fileID: 1354015047}
-  FeaturesTilemap: {fileID: 0}
+  FeaturesTilemap: {fileID: 430083179}
 --- !u!114 &1708774410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3046,6 +3046,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ad20795622c0d49bba21a398945b7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LeafSprites:
+  - {fileID: 6409313167248726516, guid: e905b646ec5b13c4ab97e0a02385ae42, type: 3}
+  - {fileID: 7205952830605453954, guid: e905b646ec5b13c4ab97e0a02385ae42, type: 3}
+  - {fileID: 1158282817922258837, guid: e905b646ec5b13c4ab97e0a02385ae42, type: 3}
+  BranchSprites:
+  - {fileID: -164776407932475988, guid: e905b646ec5b13c4ab97e0a02385ae42, type: 3}
+  - {fileID: -4494526510408824384, guid: e905b646ec5b13c4ab97e0a02385ae42, type: 3}
+  FeatureSprites:
+  - {fileID: -2909103823569698958, guid: e905b646ec5b13c4ab97e0a02385ae42, type: 3}
+  - {fileID: 9002189056323818888, guid: e905b646ec5b13c4ab97e0a02385ae42, type: 3}
+  - {fileID: 7481974360106917424, guid: e905b646ec5b13c4ab97e0a02385ae42, type: 3}
 --- !u!4 &1708774411
 Transform:
   m_ObjectHideFlags: 0

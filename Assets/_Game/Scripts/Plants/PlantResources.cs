@@ -4,29 +4,20 @@ namespace TakeCare
 
 
     [Serializable]
-    public class PlantResources
+    public struct PlantResources
     {
-        public LeafResource Leaves;
-        public BranchResource Branches;
-        public FeatureResource Features;
+        public ResourceNode Leaves;
+        public ResourceNode Branches;
+        public ResourceNode Features;
     }
 
-
-    public class LeafResource
+    [Serializable]
+    public struct ResourceNode
     {
-        
+        public float Carbon; // Size
+        public float Oxygen; // R
+        public float Nitrogen; // G
+        public float Hydrogen; // B
     }
 
-
-    public class BranchResource
-    {
-        
-    }
-
-
-    public class FeatureResource
-    {
-        
-    }
-    
 }
